@@ -1,0 +1,99 @@
+{
+  "name": "@a24z/alexandria-cli",
+  "version": "0.1.0",
+  "description": "Alexandria CLI - Unified Context Management",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "alexandria": "dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "bun run clean && bun run build:lib && bun run build:cli",
+    "build:lib": "tsc -p tsconfig.build.json",
+    "build:cli": "bun build/build-cli.js",
+    "clean": "rm -rf dist",
+    "dev": "tsx src/index.ts",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "test:watch": "bun test --watch",
+    "lint": "bunx eslint . --ext .ts,.js --max-warnings 0",
+    "lint:fix": "bunx eslint . --ext .ts,.js --fix",
+    "format": "bunx prettier --write .",
+    "format:check": "bunx prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky",
+    "release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a24z-ai/alexandria-cli.git"
+  },
+  "keywords": [
+    "alexandria",
+    "cli",
+    "codebase",
+    "documentation",
+    "context-management",
+    "a24z"
+  ],
+  "author": "a24z Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/a24z-ai/alexandria-cli/issues"
+  },
+  "homepage": "https://github.com/a24z-ai/alexandria-cli#readme",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "a24z-memory": "^0.5.71",
+    "@a24z/alexandria-outpost": "^0.1.7",
+    "@a24z/markdown-utils": "^0.1.1",
+    "chalk": "^5.6.0",
+    "commander": "^14.0.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "globby": "^14.1.0",
+    "ignore": "^7.0.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/bun": "^1.1.20",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.15.26",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
+    "esbuild": "^0.25.9",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "fast-glob": "^3.3.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "semantic-release": "^24.2.7",
+    "tsx": "^4.7.1",
+    "typescript": "^5.6.3"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "tests/**/*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ]
+}
