@@ -6,12 +6,12 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 import { globby } from 'globby';
 import ignore from 'ignore';
-import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace';
-import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter';
-import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths';
-import { generateViewIdFromName } from 'a24z-memory/dist/pure-core/stores/CodebaseViewsStore';
+import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace.js';
+import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter.js';
+import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths.js';
+import { generateViewIdFromName } from 'a24z-memory/dist/pure-core/stores/CodebaseViewsStore.js';
 import { extractStructureFromMarkdown } from './documentParser.js';
-import type { CodebaseView, ValidatedRepositoryPath } from 'a24z-memory/dist/pure-core/types/index';
+import type { CodebaseView, ValidatedRepositoryPath } from 'a24z-memory/dist/pure-core/types/index.js';
 
 export interface UntrackedDocumentInfo {
   filePath: string;

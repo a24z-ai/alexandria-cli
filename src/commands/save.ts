@@ -6,10 +6,10 @@ import { Command } from 'commander';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { createMemoryPalace, getRepositoryRoot } from '../utils/repository.js';
-import { generateViewIdFromName } from 'a24z-memory/dist/pure-core/stores/CodebaseViewsStore';
+import { generateViewIdFromName } from 'a24z-memory/dist/pure-core/stores/CodebaseViewsStore.js';
 import { formatValidationResult } from '../utils/formatting.js';
-import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths';
-import type { CodebaseView } from 'a24z-memory/dist/pure-core/types/index';
+import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths.js';
+import type { CodebaseView } from 'a24z-memory/dist/pure-core/types/index.js';
 
 export function createSaveCommand(): Command {
   const command = new Command('save');

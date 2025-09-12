@@ -4,8 +4,8 @@
 
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace';
-import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter';
+import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace.js';
+import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter.js';
 
 /**
  * Find the git repository root from a given path

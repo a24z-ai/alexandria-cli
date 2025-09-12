@@ -6,13 +6,13 @@ import { Command } from 'commander';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { execSync } from 'node:child_process';
-import { CONFIG_FILENAME } from 'a24z-memory/dist/config/schema';
+import { CONFIG_FILENAME } from 'a24z-memory/dist/config/schema.js';
 import { createMemoryPalace, getRepositoryRoot } from '../utils/repository.js';
-import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths';
-import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter';
-import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace';
-import { ConfigValidator } from 'a24z-memory/dist/config/validator';
-import { ValidationResult } from 'a24z-memory/dist/config/types';
+import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths.js';
+import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter.js';
+import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace.js';
+import { ConfigValidator } from 'a24z-memory/dist/config/validator.js';
+import { ValidationResult } from 'a24z-memory/dist/config/types.js';
 
 interface ConfigData {
   version?: string;

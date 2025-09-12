@@ -4,7 +4,7 @@
 
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import type { CodebaseViewFileCell } from 'a24z-memory/dist/pure-core/types/index';
+import type { CodebaseViewFileCell } from 'a24z-memory/dist/pure-core/types/index.js';
 
 export interface ExtractedStructure {
   name: string;

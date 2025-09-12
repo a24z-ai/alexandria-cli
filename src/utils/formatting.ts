@@ -2,7 +2,7 @@
  * Formatting utilities for CLI output
  */
 
-import type { ValidationResult, ValidationIssue } from 'a24z-memory/dist/pure-core/validation/CodebaseViewValidator';
+import type { ValidationResult, ValidationIssue } from 'a24z-memory/dist/pure-core/validation/CodebaseViewValidator.js';
 
 /**
  * Format a validation result for terminal display

@@ -1,12 +1,12 @@
-import { ProjectRegistryStore } from 'a24z-memory/dist/projects-core/ProjectRegistryStore';
-import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace';
-import type { AlexandriaRepository, AlexandriaEntry } from 'a24z-memory/dist/pure-core/types/repository';
-import type { CodebaseViewSummary } from 'a24z-memory/dist/pure-core/types/summary';
-import { extractCodebaseViewSummary } from 'a24z-memory/dist/pure-core/types/summary';
-import type { ValidatedRepositoryPath } from 'a24z-memory/dist/pure-core/types/index';
+import { ProjectRegistryStore } from 'a24z-memory/dist/projects-core/ProjectRegistryStore.js';
+import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace.js';
+import type { AlexandriaRepository, AlexandriaEntry } from 'a24z-memory/dist/pure-core/types/repository.js';
+import type { CodebaseViewSummary } from 'a24z-memory/dist/pure-core/types/summary.js';
+import { extractCodebaseViewSummary } from 'a24z-memory/dist/pure-core/types/summary.js';
+import type { ValidatedRepositoryPath } from 'a24z-memory/dist/pure-core/types/index.js';
 import { homedir } from 'os';
 
-import { FileSystemAdapter } from 'a24z-memory/dist/pure-core/abstractions/filesystem';
+import { FileSystemAdapter } from 'a24z-memory/dist/pure-core/abstractions/filesystem.js';
 
 export class AlexandriaOutpostManager {
   private readonly projectRegistry: ProjectRegistryStore;

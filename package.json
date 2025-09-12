@@ -1,6 +1,6 @@
 {
   "name": "@a24z/alexandria-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Alexandria CLI - Unified Context Management",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

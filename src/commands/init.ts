@@ -6,13 +6,13 @@ import { Command } from 'commander';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as readline from 'node:readline';
-import { CONFIG_FILENAME } from 'a24z-memory/dist/config/schema';
-import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter';
-import { ProjectRegistryStore } from 'a24z-memory/dist/projects-core/ProjectRegistryStore';
-import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace';
-import { getGitRemoteUrl } from 'a24z-memory/dist/projects-core/utils';
+import { CONFIG_FILENAME } from 'a24z-memory/dist/config/schema.js';
+import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter.js';
+import { ProjectRegistryStore } from 'a24z-memory/dist/projects-core/ProjectRegistryStore.js';
+import { MemoryPalace } from 'a24z-memory/dist/MemoryPalace.js';
+import { getGitRemoteUrl } from 'a24z-memory/dist/projects-core/utils.js';
 import { getAlexandriaWorkflowTemplate } from '../templates/alexandria-workflow.js';
-import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths';
+import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths.js';
 import { execSync } from 'node:child_process';
 
 function prompt(question: string): Promise<string> {
