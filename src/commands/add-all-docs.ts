@@ -4,7 +4,7 @@
 
 import { Command } from 'commander';
 import { getRepositoryRoot } from '../utils/repository.js';
-import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths.js';
+import { ALEXANDRIA_DIRS } from 'a24z-memory';
 import {
   findUntrackedDocuments,
   createViewsFromDocuments,

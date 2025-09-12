@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { AlexandriaOutpostManager } from '../AlexandriaOutpostManager.js';
-import type { AlexandriaRepository } from 'a24z-memory/dist/pure-core/types/repository.js';
+import type { AlexandriaRepository } from 'a24z-memory';
 import { existsSync, createReadStream } from 'fs';
 import { join } from 'path';
 

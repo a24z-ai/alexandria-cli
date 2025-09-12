@@ -4,7 +4,7 @@
 
 import * as path from 'node:path';
 import { globby } from 'globby';
-import { ALEXANDRIA_DIRS } from 'a24z-memory/dist/constants/paths.js';
+import { ALEXANDRIA_DIRS } from 'a24z-memory';
 import { createMemoryPalace } from './repository.js';
 
 export interface CoverageMetrics {

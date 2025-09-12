@@ -16,7 +16,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { LocalAPIServer } from '../api/server.js';
 import { AlexandriaOutpostManager } from '../api/AlexandriaOutpostManager.js';
-import { NodeFileSystemAdapter } from 'a24z-memory/dist/node-adapters/NodeFileSystemAdapter.js';
+import { NodeFileSystemAdapter } from 'a24z-memory';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

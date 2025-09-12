@@ -1,6 +1,6 @@
 {
   "name": "@a24z/alexandria-cli",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Alexandria CLI - Unified Context Management",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -47,9 +47,9 @@
     "node": ">=18"
   },
   "dependencies": {
-    "a24z-memory": "^0.5.71",
     "@a24z/alexandria-outpost": "^0.1.7",
     "@a24z/markdown-utils": "^0.1.1",
+    "a24z-memory": "^0.5.72",
     "chalk": "^5.6.0",
     "commander": "^14.0.0",
     "compression": "^1.8.1",

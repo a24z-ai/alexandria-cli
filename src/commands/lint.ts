@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { LibraryRulesEngine } from 'a24z-memory/dist/rules.js';
+import { LibraryRulesEngine } from 'a24z-memory';
 import chalk from 'chalk';
 
 export const lintCommand = new Command('lint')

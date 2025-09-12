@@ -5,7 +5,7 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { createMemoryPalace, getRepositoryRoot } from '../utils/repository.js';
-import { OverviewPathAutoFix } from 'a24z-memory/dist/pure-core/autofixes/OverviewPathAutoFix.js';
+import { OverviewPathAutoFix } from 'a24z-memory';
 
 export function createFixOverviewPathsCommand(): Command {
   const command = new Command('fix-overview-paths');
