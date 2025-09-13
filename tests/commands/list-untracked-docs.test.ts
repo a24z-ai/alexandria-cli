@@ -7,10 +7,9 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
 import { execSync } from 'node:child_process';
-import { MemoryPalace } from '../../../src/MemoryPalace';
-import { NodeFileSystemAdapter } from '../../../src/node-adapters/NodeFileSystemAdapter';
-import { createListUntrackedDocsCommand } from '../../../src/cli-alexandria/commands/list-untracked-docs';
-import type { CodebaseView } from '../../../src/pure-core/types';
+import { MemoryPalace, NodeFileSystemAdapter } from 'a24z-memory';
+import { createListUntrackedDocsCommand } from '../../src/commands/list-untracked-docs';
+import type { CodebaseView } from 'a24z-memory';
 
 describe('CLI - list-untracked-docs command', () => {
   let tempDir: string;
@@ -64,6 +63,7 @@ describe('CLI - list-untracked-docs command', () => {
       timestamp: new Date().toISOString(),
       overviewPath: 'docs/architecture.md',
       category: 'guide',
+      displayOrder: 1,
       cells: {
         cell1: {
           coordinates: [0, 0],
@@ -178,6 +178,7 @@ describe('CLI - list-untracked-docs command', () => {
       version: '1.0.0',
       overviewPath: 'overview.md',
       category: 'guide',
+      displayOrder: 1,
       cells: {},
     };
     palace.saveView(view);
@@ -212,6 +213,7 @@ describe('CLI - list-untracked-docs command', () => {
       version: '1.0.0',
       overviewPath: 'overview.md',
       category: 'guide',
+      displayOrder: 1,
       cells: {},
     };
     palace.saveView(view);

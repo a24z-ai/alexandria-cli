@@ -172,16 +172,17 @@ function removeAlexandriaHook(repoPath: string): void {
 
     // Check if this line is part of the Alexandria block
     if (
-      line.includes('alexandria') ||
-      line.includes('Alexandria') ||
-      line.includes('echo "Running Alexandria') ||
-      (line.includes('exit 1') && i > startIndex && i < startIndex + 10) ||
-      (line === '}' && i > startIndex && i < startIndex + 10) ||
-      (line.trim() === '' && i === startIndex + 1)
+      line &&
+      (line.includes('alexandria') ||
+        line.includes('Alexandria') ||
+        line.includes('echo "Running Alexandria') ||
+        (line.includes('exit 1') && i > startIndex && i < startIndex + 10) ||
+        (line === '}' && i > startIndex && i < startIndex + 10) ||
+        (line.trim() === '' && i === startIndex + 1))
     ) {
       endIndex = i;
       i++;
-    } else if (line.trim() === '' && i < startIndex + 10) {
+    } else if (line && line.trim() === '' && i < startIndex + 10) {
       // Empty line might be part of our block
       endIndex = i;
       i++;

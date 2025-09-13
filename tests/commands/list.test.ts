@@ -7,10 +7,9 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
 import { execSync } from 'node:child_process';
-import { MemoryPalace } from '../../../src/MemoryPalace';
-import { NodeFileSystemAdapter } from '../../../src/node-adapters/NodeFileSystemAdapter';
-import { createListCommand } from '../../../src/cli-alexandria/commands/list';
-import type { CodebaseView } from '../../../src/pure-core/types';
+import { MemoryPalace, NodeFileSystemAdapter } from 'a24z-memory';
+import { createListCommand } from '../../src/commands/list';
+import type { CodebaseView } from 'a24z-memory';
 
 describe('CLI - list command', () => {
   let tempDir: string;
@@ -52,17 +51,18 @@ describe('CLI - list command', () => {
       description: 'First test view',
       version: '1.0.0',
       timestamp: new Date().toISOString(),
+      overviewPath: 'docs/test-view-1.md',
+      category: 'test',
+      displayOrder: 1,
       cells: {
         cell1: {
-          id: 'cell1',
           coordinates: [0, 0],
-          type: 'file',
-          content: 'src/index.ts',
+          files: ['src/index.ts'],
         },
       },
       scope: {
-        included: ['src/**/*.ts'],
-        excluded: ['**/*.test.ts'],
+        includePatterns: ['src/**/*.ts'],
+        excludePatterns: ['**/*.test.ts'],
       },
     };
 
@@ -72,23 +72,22 @@ describe('CLI - list command', () => {
       description: 'Second test view',
       version: '1.0.0',
       timestamp: new Date().toISOString(),
+      overviewPath: 'docs/test-view-2.md',
+      category: 'test',
+      displayOrder: 2,
       cells: {
         cell1: {
-          id: 'cell1',
           coordinates: [0, 0],
-          type: 'file',
-          content: 'README.md',
+          files: ['README.md'],
         },
         cell2: {
-          id: 'cell2',
           coordinates: [0, 1],
-          type: 'pattern',
-          content: '**/*.json',
+          files: ['package.json', 'tsconfig.json'],
         },
       },
       scope: {
-        included: ['**/*'],
-        excluded: [],
+        includePatterns: ['**/*'],
+        excludePatterns: [],
       },
     };
 
@@ -151,17 +150,18 @@ describe('CLI - list command', () => {
       description: 'Testing path option',
       version: '1.0.0',
       timestamp: new Date().toISOString(),
+      overviewPath: 'docs/path-test.md',
+      category: 'test',
+      displayOrder: 1,
       cells: {
         cell1: {
-          id: 'cell1',
           coordinates: [0, 0],
-          type: 'file',
-          content: 'test.ts',
+          files: ['test.ts'],
         },
       },
       scope: {
-        included: ['**/*'],
-        excluded: [],
+        includePatterns: ['**/*'],
+        excludePatterns: [],
       },
     };
 

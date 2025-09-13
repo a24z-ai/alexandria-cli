@@ -41,7 +41,7 @@ function getCurrentVersion(): string {
         stdio: ['pipe', 'pipe', 'ignore'],
       });
       const match = result.match(/a24z-memory@(\d+\.\d+\.\d+)/);
-      if (match) return match[1];
+      if (match?.[1]) return match[1];
     } catch {
       // Continue to unknown
     }
@@ -81,8 +81,10 @@ function compareVersions(current: string, latest: string): number {
   const latestParts = latest.split('.').map(Number);
 
   for (let i = 0; i < 3; i++) {
-    if (currentParts[i] < latestParts[i]) return -1;
-    if (currentParts[i] > latestParts[i]) return 1;
+    const currentPart = currentParts[i] ?? 0;
+    const latestPart = latestParts[i] ?? 0;
+    if (currentPart < latestPart) return -1;
+    if (currentPart > latestPart) return 1;
   }
   return 0;
 }

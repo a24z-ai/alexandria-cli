@@ -122,7 +122,7 @@ export function getReferencedFiles(repoPath: string): Set<string> {
       for (const cellName in view.cells) {
         const cell = view.cells[cellName];
         // Check if it's a file cell (has 'files' property)
-        if ('files' in cell && Array.isArray(cell.files)) {
+        if (cell && 'files' in cell && Array.isArray(cell.files)) {
           for (const file of cell.files) {
             // Normalize the file path
             const normalizedFile = file.startsWith('/') ? file.slice(1) : file;

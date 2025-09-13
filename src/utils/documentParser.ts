@@ -34,7 +34,7 @@ export function extractStructureFromMarkdown(content: string, repositoryPath?: s
   let maxCol = 0;
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
+    const line = lines[i]?.trim() || '';
 
     // Extract title from first heading
     if (line.startsWith('# ') && name === 'Codebase View') {

@@ -141,7 +141,8 @@ function removeAlexandriaSection(content: string): string {
   // Find the end of the Alexandria section (next ## heading or end of file)
   let endIndex = lines.length;
   for (let i = startIndex + 1; i < lines.length; i++) {
-    if (lines[i].match(/^#{1,2}\s+/) && !lines[i].startsWith('###')) {
+    const line = lines[i];
+    if (line && line.match(/^#{1,2}\s+/) && !line.startsWith('###')) {
       endIndex = i;
       break;
     }
