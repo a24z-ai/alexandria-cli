@@ -14,7 +14,7 @@ import { homedir } from 'os';
 import chalk from 'chalk';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { AlexandriaOutpostManager, NodeFileSystemAdapter } from '../api/AlexandriaOutpostManager.js';
+import { AlexandriaOutpostManager, NodeFileSystemAdapter, NodeGlobAdapter } from '../api/AlexandriaOutpostManager.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -152,7 +152,8 @@ function createServeCommand() {
         try {
           // Create filesystem adapter and manager to check registered repositories
           const fsAdapter = new NodeFileSystemAdapter();
-          const outpostManager = new AlexandriaOutpostManager(fsAdapter);
+          const globAdapter = new NodeGlobAdapter();
+          const outpostManager = new AlexandriaOutpostManager(fsAdapter, globAdapter);
 
           const projectCount = outpostManager.getRepositoryCount();
           console.log(chalk.dim(`   Found ${projectCount} registered repositories`));

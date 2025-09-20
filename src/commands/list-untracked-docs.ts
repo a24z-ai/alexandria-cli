@@ -8,7 +8,7 @@ import * as fs from 'node:fs';
 import { globby } from 'globby';
 import ignore from 'ignore';
 import { createMemoryPalace, getRepositoryRoot } from '../utils/repository.js';
-import { ALEXANDRIA_DIRS } from 'a24z-memory';
+import { ALEXANDRIA_DIRS } from '@a24z/core-library';
 
 export function createListUntrackedDocsCommand(): Command {
   const command = new Command('list-untracked-docs');

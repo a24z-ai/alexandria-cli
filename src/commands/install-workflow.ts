@@ -7,7 +7,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { getRepositoryRoot } from '../utils/repository.js';
 import { getAlexandriaWorkflowTemplate } from '../templates/alexandria-workflow.js';
-import { ALEXANDRIA_DIRS } from 'a24z-memory';
+import { ALEXANDRIA_DIRS } from '@a24z/core-library';
 
 export function createInstallWorkflowCommand(): Command {
   const command = new Command('install-workflow');

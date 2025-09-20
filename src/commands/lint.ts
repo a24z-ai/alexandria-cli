@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { LibraryRulesEngine } from 'a24z-memory';
+import { LibraryRulesEngine, NodeFileSystemAdapter, NodeGlobAdapter } from '@a24z/core-library';
 import chalk from 'chalk';
 
 export const lintCommand = new Command('lint')
@@ -12,7 +12,9 @@ export const lintCommand = new Command('lint')
   .option('--disable <rules...>', 'Disable specific rules')
   .option('--list-rules', 'List all available lint rules and their configurations')
   .action(async (options) => {
-    const engine = new LibraryRulesEngine();
+    const fsAdapter = new NodeFileSystemAdapter();
+    const globAdapter = new NodeGlobAdapter();
+    const engine = new LibraryRulesEngine(fsAdapter, globAdapter);
 
     // Handle --list-rules option
     if (options.listRules) {

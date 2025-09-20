@@ -7,9 +7,9 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
 import { execSync } from 'node:child_process';
-import { MemoryPalace, NodeFileSystemAdapter } from 'a24z-memory';
+import { MemoryPalace, NodeFileSystemAdapter } from '@a24z/core-library';
 import { createListCommand } from '../../src/commands/list';
-import type { CodebaseView } from 'a24z-memory';
+import type { CodebaseView } from '@a24z/core-library';
 
 describe('CLI - list command', () => {
   let tempDir: string;

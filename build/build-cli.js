@@ -18,8 +18,8 @@ await esbuild.build({
     // Keep node built-ins external
     'node:*',
     // Keep all dependencies external
-    'a24z-memory',
     '@a24z/alexandria-outpost',
+    '@a24z/core-library',
     '@a24z/markdown-utils',
     'chalk',
     'commander',

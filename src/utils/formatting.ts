@@ -2,7 +2,7 @@
  * Formatting utilities for CLI output
  */
 
-import type { CodebaseValidationResult as ValidationResult, ValidationIssue } from 'a24z-memory';
+import type { CodebaseValidationResult as ValidationResult, ValidationIssue } from '@a24z/core-library';
 
 /**
  * Format a validation result for terminal display

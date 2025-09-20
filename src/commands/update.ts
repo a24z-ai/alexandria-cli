@@ -26,7 +26,7 @@ function getCurrentVersion(): string {
     for (const path of possiblePaths) {
       try {
         const packageJson = JSON.parse(readFileSync(path, 'utf8'));
-        if (packageJson.name === 'a24z-memory' && packageJson.version) {
+        if (packageJson.name === '@a24z/alexandria-cli' && packageJson.version) {
           return packageJson.version;
         }
       } catch {
@@ -36,11 +36,11 @@ function getCurrentVersion(): string {
 
     // Fallback: try to get version from npm list for global installation
     try {
-      const result = execSync('npm list -g a24z-memory --depth=0', {
+      const result = execSync('npm list -g @a24z/alexandria-cli --depth=0', {
         encoding: 'utf8',
         stdio: ['pipe', 'pipe', 'ignore'],
       });
-      const match = result.match(/a24z-memory@(\d+\.\d+\.\d+)/);
+      const match = result.match(/@a24z\/alexandria-cli@(\d+\.\d+\.\d+)/);
       if (match?.[1]) return match[1];
     } catch {
       // Continue to unknown
@@ -54,7 +54,7 @@ function getCurrentVersion(): string {
 
 function getLatestVersion(): string {
   try {
-    const result = execSync('npm view a24z-memory version', {
+    const result = execSync('npm view @a24z/alexandria-cli version', {
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'ignore'],
     });
@@ -66,11 +66,11 @@ function getLatestVersion(): string {
 
 function isGloballyInstalled(): boolean {
   try {
-    const globalPath = execSync('npm list -g --depth=0 a24z-memory', {
+    const globalPath = execSync('npm list -g --depth=0 @a24z/alexandria-cli', {
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'ignore'],
     });
-    return globalPath.includes('a24z-memory@');
+    return globalPath.includes('@a24z/alexandria-cli@');
   } catch {
     return false;
   }
@@ -93,15 +93,15 @@ async function updatePackage(isGlobal: boolean): Promise<void> {
   const scope = isGlobal ? '-g' : '';
   const packageManager = process.env.npm_config_user_agent?.startsWith('bun') ? 'bun' : 'npm';
 
-  console.log(chalk.cyan(`Updating a24z-memory using ${packageManager}...`));
+  console.log(chalk.cyan(`Updating @a24z/alexandria-cli using ${packageManager}...`));
 
   try {
     if (packageManager === 'bun') {
-      execSync(`bun ${isGlobal ? 'install -g' : 'add'} a24z-memory@latest`, {
+      execSync(`bun ${isGlobal ? 'install -g' : 'add'} @a24z/alexandria-cli@latest`, {
         stdio: 'inherit',
       });
     } else {
-      execSync(`npm install ${scope} a24z-memory@latest`, {
+      execSync(`npm install ${scope} @a24z/alexandria-cli@latest`, {
         stdio: 'inherit',
       });
     }

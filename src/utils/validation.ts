@@ -2,10 +2,10 @@
  * Validation Utilities - Reusable functions for validating multiple views
  */
 
-import { MemoryPalace } from 'a24z-memory';
-import { NodeFileSystemAdapter } from 'a24z-memory';
-import type { CodebaseView } from 'a24z-memory';
-import type { CodebaseValidationResult as ValidationResult } from 'a24z-memory';
+import { MemoryPalace } from '@a24z/core-library';
+import { NodeFileSystemAdapter } from '@a24z/core-library';
+import type { CodebaseView } from '@a24z/core-library';
+import type { CodebaseValidationResult as ValidationResult } from '@a24z/core-library';
 
 export interface ViewValidationResult {
   viewId: string;

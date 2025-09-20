@@ -14,7 +14,7 @@ bun add -g @a24z/alexandria-cli
 
 ## Dependencies
 
-This CLI depends on the `a24z-memory` package which provides the core MemoryPalace functionality.
+This CLI depends on the `@a24z/core-library` package which provides the core MemoryPalace functionality.
 
 ## Usage
 

@@ -6,7 +6,7 @@ import { Command } from 'commander';
 import * as path from 'node:path';
 import { createMemoryPalace, getRepositoryRoot } from '../utils/repository.js';
 import { formatValidationResult, formatValidationSummary } from '../utils/formatting.js';
-import { ALEXANDRIA_DIRS } from 'a24z-memory';
+import { ALEXANDRIA_DIRS } from '@a24z/core-library';
 
 export function createValidateCommand(): Command {
   const command = new Command('validate');

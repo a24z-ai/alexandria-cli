@@ -1,11 +1,11 @@
 import { Command } from 'commander';
 import * as path from 'path';
 import * as fs from 'fs';
-import { NodeFileSystemAdapter } from 'a24z-memory';
-import { ProjectRegistryStore } from 'a24z-memory';
-import { MemoryPalace } from 'a24z-memory';
-import { getGitRemoteUrl } from 'a24z-memory';
-import { hasAlexandriaWorkflow, hasMemoryNotes } from 'a24z-memory';
+import { NodeFileSystemAdapter } from '@a24z/core-library';
+import { ProjectRegistryStore } from '@a24z/core-library';
+import { MemoryPalace } from '@a24z/core-library';
+import { hasAlexandriaWorkflow, hasMemoryNotes } from '@a24z/core-library';
+import { getGitRemoteUrl } from '../utils/git.js';
 
 export function createProjectsCommand(): Command {
   const projectsCommand = new Command('projects').description('Manage your project registry');
