@@ -21,9 +21,12 @@ export function createAddDocCommand(): Command {
     .option('-p, --path <path>', 'Repository path (defaults to current directory)')
     .option('--skip-guidance', 'Skip the guidance on creating effective CodebaseViews')
     .option('--dry-run', 'Preview what would be created without actually creating the view')
+    .option('-y, --yes', 'Non-interactive mode, skip all prompts')
+    .option('--non-interactive', 'Non-interactive mode, skip all prompts (alias for --yes)')
     .action(async (docFile: string, options) => {
-      // Show guidance by default (unless skipped)
-      if (!options.skipGuidance) {
+      // Show guidance by default (unless skipped or non-interactive)
+      const nonInteractive = options.yes || options.nonInteractive;
+      if (!options.skipGuidance && !nonInteractive) {
         console.log(`
 📚 Adding Documentation to the Alexandria Library
 ═══════════════════════════════════════════════════════
@@ -48,7 +51,7 @@ IMPORTANT: The goal is to add CURRENT and MAINTAINABLE documentation to the libr
    This is not just okay—it's ESSENTIAL for creating reliable CodebaseViews.
 
 3. STRUCTURE YOUR DOCUMENTATION
-   Organize your markdown with clear sections that map to grid cells:
+   Organize your markdown with clear sections that map to reference groups:
    
    # Architecture Overview
    
@@ -73,15 +76,17 @@ IMPORTANT: The goal is to add CURRENT and MAINTAINABLE documentation to the libr
 - Run 'alexandria list-untracked-docs' to find documentation to add to the library
 - Check file existence before referencing them
 - Use relative paths from repository root
-- Group related files in the same grid cell
+- Group related files in the same section
 - Consider the visual layout (typically 2-3 rows, 2-4 columns works well)
 
 Press Enter to continue, or Ctrl+C to exit...
 `);
-        // Wait for user input
-        await new Promise<void>((resolve) => {
-          process.stdin.once('data', () => resolve());
-        });
+        // Wait for user input (unless non-interactive)
+        if (!nonInteractive) {
+          await new Promise<void>((resolve) => {
+            process.stdin.once('data', () => resolve());
+          });
+        }
       }
       try {
         const palace = createMemoryPalace(options.path);
@@ -133,6 +138,12 @@ Press Enter to continue, or Ctrl+C to exit...
         console.log('');
         if (options.dryRun) {
           console.log(`🔍 DRY RUN - Preview of what would be created:`);
+          console.log('');
+          console.log('═══════════════════════════════════════════════════════════════');
+          console.log('JSON Structure:');
+          console.log('═══════════════════════════════════════════════════════════════');
+          console.log(JSON.stringify(result.view, null, 2));
+          console.log('═══════════════════════════════════════════════════════════════');
         } else {
           console.log(`✅ Documentation added to the Alexandria library!`);
         }
@@ -145,10 +156,10 @@ Press Enter to continue, or Ctrl+C to exit...
         console.log('');
         console.log(`📊 Structure Extracted:`);
         console.log(`   Grid: ${result.view!.rows} rows × ${result.view!.cols} columns`);
-        console.log(`   Cells: ${Object.keys(result.view!.cells).length} sections`);
+        console.log(`   Sections: ${Object.keys(result.view!.referenceGroups).length}`);
 
         let totalFiles = 0;
-        for (const cell of Object.values(result.view!.cells)) {
+        for (const cell of Object.values(result.view!.referenceGroups)) {
           totalFiles += cell.files.length;
         }
         console.log(`   Files: ${totalFiles} files referenced`);

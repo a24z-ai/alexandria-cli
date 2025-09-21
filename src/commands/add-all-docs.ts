@@ -22,6 +22,9 @@ export function createAddAllDocsCommand(): Command {
     .option('--category <category>', 'Category to assign to created views (default: "docs")')
     .option('--skip-validation', 'Skip validation during view creation')
     .option('--quiet', 'Suppress detailed output, show only summary')
+    .option('-y, --yes', 'Non-interactive mode (for consistency with other commands)')
+    .option('--non-interactive', 'Non-interactive mode (alias for --yes)')
+    .option('--json', 'Output results as JSON (useful with --dry-run)')
     .action(async (options) => {
       try {
         const repoPath = getRepositoryRoot(options.path);
@@ -54,13 +57,39 @@ export function createAddAllDocsCommand(): Command {
         const results = await createViewsFromDocuments(repoPath, untrackedDocs, viewOptions);
         const stats = getViewCreationStats(results);
 
+        // Output JSON if requested
+        if (options.json) {
+          const jsonOutput = {
+            dryRun: options.dryRun || false,
+            results: results.map((r) => ({
+              file: r.file,
+              success: r.success,
+              viewName: r.viewName,
+              viewId: r.viewId,
+              error: r.error,
+              issues: r.issues,
+              view: r.view,
+            })),
+            stats: {
+              successful: stats.successful,
+              failed: stats.failed,
+              total: stats.total,
+              totalIssues: stats.totalIssues,
+              totalFiles: stats.totalFiles,
+              totalCells: stats.totalCells,
+            },
+          };
+          console.log(JSON.stringify(jsonOutput, null, 2));
+          return;
+        }
+
         // Show individual results (unless quiet)
         if (!options.quiet) {
           results.forEach((result) => {
             if (result.success) {
-              const cellCount = result.view ? Object.keys(result.view.cells).length : 0;
+              const cellCount = result.view ? Object.keys(result.view.referenceGroups).length : 0;
               const fileCount = result.view
-                ? Object.values(result.view.cells).reduce((sum, cell) => sum + cell.files.length, 0)
+                ? Object.values(result.view.referenceGroups).reduce((sum, cell) => sum + cell.files.length, 0)
                 : 0;
 
               console.log(`\n  ${options.dryRun ? '📄' : '✅'} ${result.file}`);
@@ -68,7 +97,7 @@ export function createAddAllDocsCommand(): Command {
 
               if (result.view) {
                 console.log(
-                  `     → Grid: ${result.view.rows}×${result.view.cols}, ${cellCount} cells, ${fileCount} files`,
+                  `     → Grid: ${result.view.rows}×${result.view.cols}, ${cellCount} sections, ${fileCount} files`,
                 );
               }
 
@@ -96,7 +125,7 @@ export function createAddAllDocsCommand(): Command {
         }
 
         if (stats.successful > 0) {
-          console.log(`   ${stats.totalCells} total cells created`);
+          console.log(`   ${stats.totalCells} total sections created`);
           console.log(`   ${stats.totalFiles} total files referenced`);
         }
 

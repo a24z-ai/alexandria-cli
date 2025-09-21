@@ -17,6 +17,7 @@ export function createListUntrackedDocsCommand(): Command {
     .description('List all markdown documents not part of any CodebaseView')
     .option('-p, --path <path>', 'Repository path (defaults to current directory)')
     .option('-v, --verbose', 'Show verbose output including reasons for exclusion')
+    .option('--json', 'Output as JSON')
     .action(async (options) => {
       try {
         const palace = createMemoryPalace(options.path);
@@ -68,6 +69,29 @@ export function createListUntrackedDocsCommand(): Command {
           }
           return a.localeCompare(b);
         });
+
+        // Output JSON if requested
+        if (options.json) {
+          const jsonOutput = {
+            total: untrackedFiles.length,
+            totalMarkdownFiles: nonAlexandriaFiles.length,
+            filesInViews: overviewPaths.size,
+            untrackedFiles: untrackedFiles,
+            byDirectory: {} as Record<string, string[]>,
+          };
+
+          // Group files by directory for JSON output
+          untrackedFiles.forEach((file) => {
+            const dir = path.dirname(file);
+            if (!jsonOutput.byDirectory[dir]) {
+              jsonOutput.byDirectory[dir] = [];
+            }
+            jsonOutput.byDirectory[dir].push(path.basename(file));
+          });
+
+          console.log(JSON.stringify(jsonOutput, null, 2));
+          return;
+        }
 
         // Display results
         if (untrackedFiles.length === 0) {

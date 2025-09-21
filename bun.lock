@@ -5,7 +5,7 @@
       "name": "@a24z/alexandria-cli",
       "dependencies": {
         "@a24z/alexandria-outpost": "^0.1.7",
-        "@a24z/core-library": "^0.1.9",
+        "@a24z/core-library": "^0.1.10",
         "@a24z/markdown-utils": "^0.1.2",
         "chalk": "^5.6.0",
         "commander": "^14.0.0",
@@ -42,7 +42,7 @@
   "packages": {
     "@a24z/alexandria-outpost": ["@a24z/alexandria-outpost@0.1.7", "", { "dependencies": { "chalk": "^5.6.2", "commander": "^14.0.0", "express": "^5.1.0", "open": "^10.2.0" }, "peerDependencies": { "@a24z/memory-palace": "*" }, "optionalPeers": ["@a24z/memory-palace"], "bin": { "alexandria-outpost": "dist/cli.js" } }, "sha512-V8e6GQ2LYXi99W+26ndd8Ev7UjlCF+6mrll79lrrzxRuI5ABgL7kPl02uWhm5e4vSTxxh2GS0CXodS/+YGbWbA=="],
 
-    "@a24z/core-library": ["@a24z/core-library@0.1.9", "", {}, "sha512-UWioSh8h7bba9W5ePWsbsrQwOcpal3yTaFbB0TDGukt4UOcIQfiLCZgmJR2Qs2SmBpmPO94Cg5q6IFIu7SJ6Wg=="],
+    "@a24z/core-library": ["@a24z/core-library@0.1.10", "", {}, "sha512-+CXFyeDFRV6JPNiQc9cSRNxOxnVQRq1mzJIAhTwGjRt+FvezbqDz5Bm52YnlzniY6cWzqgUu8B9eO4RvbrYRwA=="],
 
     "@a24z/markdown-utils": ["@a24z/markdown-utils@0.1.2", "", {}, "sha512-dYYK1pGa3MUZByLqTgelRiZqe+k7V6X4gj3UEWYlT17HJ4lbfGoL9FupSoFuBoiufnM6FgXoeE209McOw3vFoQ=="],
 

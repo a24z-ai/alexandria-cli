@@ -16,6 +16,7 @@ export function createValidateCommand(): Command {
     .argument('<view-name-or-path>', 'View ID/name or path to JSON file to validate')
     .option('-p, --path <path>', 'Repository path (defaults to current directory)')
     .option('--summary', 'Show only validation summary')
+    .option('--json', 'Output validation results as JSON')
     .action(async (viewNameOrPath: string, options) => {
       try {
         const palace = createMemoryPalace(options.path);
@@ -61,6 +62,25 @@ export function createValidateCommand(): Command {
 
         // Validate the view
         const validationResult = palace.validateView(view);
+
+        // Output JSON if requested
+        if (options.json) {
+          const jsonOutput = {
+            viewId: view.id,
+            viewName: view.name,
+            source: viewSource,
+            isValid: validationResult.isValid,
+            summary: validationResult.summary,
+            issues: validationResult.issues,
+          };
+          console.log(JSON.stringify(jsonOutput, null, 2));
+
+          // Exit with appropriate code
+          if (!validationResult.isValid) {
+            process.exit(1);
+          }
+          return;
+        }
 
         // Display results
         console.log(`Validating ${viewSource}...\n`);

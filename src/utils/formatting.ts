@@ -71,7 +71,57 @@ function formatIssue(issue: ValidationIssue, indent: string = ''): string {
     lines.push(`${indent}  ${issue.context}`);
   }
 
+  // Add helpful examples for common errors
+  const example = getExampleForIssue(issue);
+  if (example) {
+    lines.push(`${indent}  Example: ${example}`);
+  }
+
   return lines.join('\n');
+}
+
+/**
+ * Get helpful example for common validation issues
+ */
+function getExampleForIssue(issue: ValidationIssue): string | null {
+  const message = issue.message.toLowerCase();
+
+  if (message.includes('invalid referencegroups format') || message.includes('invalid cells format')) {
+    return `{"Section Name": {"coordinates": [0, 0], "files": ["src/file.ts"]}}`;
+  }
+
+  if (message.includes('missing required field')) {
+    if (message.includes('coordinates')) {
+      return `"coordinates": [0, 0] (row, column - zero indexed)`;
+    }
+    if (message.includes('files')) {
+      return `"files": ["src/index.ts", "src/utils.ts"]`;
+    }
+    if (message.includes('name')) {
+      return `"name": "Architecture Overview"`;
+    }
+    if (message.includes('description')) {
+      return `"description": "High-level system architecture"`;
+    }
+  }
+
+  if (message.includes('file not found') || message.includes('file does not exist')) {
+    return 'Ensure file paths are relative to repository root (e.g., "src/index.ts" not "/src/index.ts")';
+  }
+
+  if (message.includes('invalid coordinates')) {
+    return '[row, col] where both are zero-indexed integers (e.g., [0, 0] for top-left)';
+  }
+
+  if (message.includes('duplicate coordinates')) {
+    return 'Each reference group must have unique coordinates. Consider using [0,1] or [1,0]';
+  }
+
+  if (message.includes('invalid file path')) {
+    return 'Use forward slashes and relative paths: "src/components/Button.tsx"';
+  }
+
+  return null;
 }
 
 /**

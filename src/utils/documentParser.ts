@@ -9,7 +9,7 @@ import type { CodebaseViewFileCell } from '@a24z/core-library';
 export interface ExtractedStructure {
   name: string;
   description: string;
-  cells: Record<string, CodebaseViewFileCell>;
+  referenceGroups: Record<string, CodebaseViewFileCell>;
   rows?: number;
   cols?: number;
 }
@@ -21,7 +21,7 @@ export interface ExtractedStructure {
  */
 export function extractStructureFromMarkdown(content: string, repositoryPath?: string): ExtractedStructure {
   const lines = content.split('\n');
-  const cells: Record<string, CodebaseViewFileCell> = {};
+  const referenceGroups: Record<string, CodebaseViewFileCell> = {};
 
   // Extract title and description
   let name = 'Codebase View';
@@ -60,7 +60,7 @@ export function extractStructureFromMarkdown(content: string, repositoryPath?: s
         maxRow = Math.max(maxRow, row);
         maxCol = Math.max(maxCol, col);
 
-        cells[currentSection] = {
+        referenceGroups[currentSection] = {
           coordinates: [row, col],
           files: currentFiles,
           priority: 0,
@@ -119,21 +119,21 @@ export function extractStructureFromMarkdown(content: string, repositoryPath?: s
     maxRow = Math.max(maxRow, row);
     maxCol = Math.max(maxCol, col);
 
-    cells[currentSection] = {
+    referenceGroups[currentSection] = {
       coordinates: [row, col],
       files: currentFiles,
       priority: 0,
     };
   }
 
-  // Calculate grid dimensions only if we have cells
-  const rows = Object.keys(cells).length > 0 ? maxRow + 1 : 1;
-  const cols = Object.keys(cells).length > 0 ? Math.min(maxCol + 1, 3) : 1;
+  // Calculate grid dimensions only if we have referenceGroups
+  const rows = Object.keys(referenceGroups).length > 0 ? maxRow + 1 : 1;
+  const cols = Object.keys(referenceGroups).length > 0 ? Math.min(maxCol + 1, 3) : 1;
 
   return {
     name: name || 'Codebase View',
     description: description || 'Codebase view extracted from documentation',
-    cells,
+    referenceGroups,
     rows,
     cols,
   };

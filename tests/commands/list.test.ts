@@ -54,7 +54,7 @@ describe('CLI - list command', () => {
       overviewPath: 'docs/test-view-1.md',
       category: 'test',
       displayOrder: 1,
-      cells: {
+      referenceGroups: {
         cell1: {
           coordinates: [0, 0],
           files: ['src/index.ts'],
@@ -75,7 +75,7 @@ describe('CLI - list command', () => {
       overviewPath: 'docs/test-view-2.md',
       category: 'test',
       displayOrder: 2,
-      cells: {
+      referenceGroups: {
         cell1: {
           coordinates: [0, 0],
           files: ['README.md'],
@@ -113,8 +113,8 @@ describe('CLI - list command', () => {
     expect(output.join('\n')).toContain('First test view');
     expect(output.join('\n')).toContain('Test View 2 (test-view-2)');
     expect(output.join('\n')).toContain('Second test view');
-    expect(output.join('\n')).toContain('Cells: 1');
-    expect(output.join('\n')).toContain('Cells: 2');
+    expect(output.join('\n')).toContain('Sections: 1');
+    expect(output.join('\n')).toContain('Sections: 2');
   });
 
   it('should show appropriate message when no views exist', () => {
@@ -153,7 +153,7 @@ describe('CLI - list command', () => {
       overviewPath: 'docs/path-test.md',
       category: 'test',
       displayOrder: 1,
-      cells: {
+      referenceGroups: {
         cell1: {
           coordinates: [0, 0],
           files: ['test.ts'],

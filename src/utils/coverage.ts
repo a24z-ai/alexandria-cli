@@ -118,9 +118,9 @@ export function getReferencedFiles(repoPath: string): Set<string> {
   const views = palace.listViews();
 
   for (const view of views) {
-    if (view.cells) {
-      for (const cellName in view.cells) {
-        const cell = view.cells[cellName];
+    if (view.referenceGroups) {
+      for (const cellName in view.referenceGroups) {
+        const cell = view.referenceGroups[cellName];
         // Check if it's a file cell (has 'files' property)
         if (cell && 'files' in cell && Array.isArray(cell.files)) {
           for (const file of cell.files) {

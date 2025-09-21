@@ -14,6 +14,7 @@ export function createListCommand(): Command {
     .description('List all codebase views in the current repository')
     .option('-p, --path <path>', 'Repository path (defaults to current directory)')
     .option('-c, --category <category>', 'Filter by category (e.g., product, documentation, etc.)')
+    .option('--json', 'Output as JSON')
     .action((options) => {
       try {
         const palace = createMemoryPalace(options.path);
@@ -36,6 +37,17 @@ export function createListCommand(): Command {
           if (b.displayOrder !== undefined) return 1;
           return (a.name || a.id).localeCompare(b.name || b.id);
         });
+
+        // Output JSON if requested
+        if (options.json) {
+          const jsonOutput = {
+            total: views.length,
+            category: options.category || null,
+            views: views,
+          };
+          console.log(JSON.stringify(jsonOutput, null, 2));
+          return;
+        }
 
         if (views.length === 0) {
           if (options.category) {
@@ -60,7 +72,7 @@ export function createListCommand(): Command {
             console.log(`   ${view.description}`);
           }
           console.log(`   Created: ${view.timestamp ? new Date(view.timestamp).toLocaleDateString() : 'Unknown'}`);
-          console.log(`   Cells: ${Object.keys(view.cells).length}`);
+          console.log(`   Sections: ${Object.keys(view.referenceGroups).length}`);
           console.log('');
         });
       } catch (error) {

@@ -64,7 +64,7 @@ describe('CLI - list-untracked-docs command', () => {
       overviewPath: 'docs/architecture.md',
       category: 'guide',
       displayOrder: 1,
-      cells: {
+      referenceGroups: {
         cell1: {
           coordinates: [0, 0],
           files: ['src/index.ts'],
@@ -179,7 +179,7 @@ describe('CLI - list-untracked-docs command', () => {
       overviewPath: 'overview.md',
       category: 'guide',
       displayOrder: 1,
-      cells: {},
+      referenceGroups: {},
     };
     palace.saveView(view);
 
@@ -214,7 +214,7 @@ describe('CLI - list-untracked-docs command', () => {
       overviewPath: 'overview.md',
       category: 'guide',
       displayOrder: 1,
-      cells: {},
+      referenceGroups: {},
     };
     palace.saveView(view);
 

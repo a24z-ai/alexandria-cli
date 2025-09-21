@@ -176,7 +176,7 @@ export function createViewFromDocument(
       description: description,
       rows: extracted.rows || 1,
       cols: extracted.cols || 1,
-      cells: extracted.cells,
+      referenceGroups: extracted.referenceGroups,
       overviewPath: relativePath,
       category: category,
       displayOrder: 0, // Will be auto-assigned when saved
@@ -261,13 +261,13 @@ export function getViewCreationStats(results: ViewCreationResult[]) {
   const totalIssues = results.reduce((sum, r) => sum + (r.issues || 0), 0);
   const totalFiles = results.reduce((sum, r) => {
     if (r.view) {
-      return sum + Object.values(r.view.cells).reduce((cellSum, cell) => cellSum + cell.files.length, 0);
+      return sum + Object.values(r.view.referenceGroups).reduce((cellSum, cell) => cellSum + cell.files.length, 0);
     }
     return sum;
   }, 0);
   const totalCells = results.reduce((sum, r) => {
     if (r.view) {
-      return sum + Object.keys(r.view.cells).length;
+      return sum + Object.keys(r.view.referenceGroups).length;
     }
     return sum;
   }, 0);

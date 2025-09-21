@@ -47,6 +47,8 @@ export function createInitCommand(): Command {
     .option('--no-workflow', 'Skip GitHub workflow setup')
     .option('--no-agents', 'Skip adding Alexandria guidance to AGENTS.md')
     .option('--no-hooks', 'Skip setting up husky pre-commit hooks')
+    .option('-y, --yes', 'Non-interactive mode, accept all defaults')
+    .option('--non-interactive', 'Non-interactive mode, accept all defaults (alias for --yes)')
     .action(async (options) => {
       try {
         const repoPath = process.cwd();
@@ -125,12 +127,15 @@ export function createInitCommand(): Command {
         }
 
         // Ask about AGENTS.md if not opted out
+        const nonInteractive = options.yes || options.nonInteractive;
         if (options.agents !== false) {
           console.log('');
-          const installAgents = await promptYesNo(
-            '📚 Would you like to add Alexandria guidance to AGENTS.md?\n   This helps AI assistants understand Alexandria commands',
-            true,
-          );
+          const installAgents = nonInteractive
+            ? true
+            : await promptYesNo(
+                '📚 Would you like to add Alexandria guidance to AGENTS.md?\n   This helps AI assistants understand Alexandria commands',
+                true,
+              );
 
           if (installAgents) {
             try {
@@ -174,10 +179,12 @@ export function createInitCommand(): Command {
         // Ask about husky hooks if not opted out
         if (options.hooks !== false && fs.existsSync(path.join(repoPath, '.git'))) {
           console.log('');
-          const installHooks = await promptYesNo(
-            '🪝 Would you like to set up husky pre-commit hooks?\n   This will validate Alexandria views before each commit',
-            true,
-          );
+          const installHooks = nonInteractive
+            ? true
+            : await promptYesNo(
+                '🪝 Would you like to set up husky pre-commit hooks?\n   This will validate Alexandria views before each commit',
+                true,
+              );
 
           if (installHooks) {
             try {
@@ -213,10 +220,12 @@ export function createInitCommand(): Command {
         // Ask about GitHub workflow if not opted out
         if (options.workflow !== false && fs.existsSync(path.join(repoPath, '.git'))) {
           console.log('');
-          const installWorkflow = await promptYesNo(
-            '📦 Would you like to install the GitHub Action workflow?\n   This will auto-register your project when pushed to GitHub',
-            true,
-          );
+          const installWorkflow = nonInteractive
+            ? true
+            : await promptYesNo(
+                '📦 Would you like to install the GitHub Action workflow?\n   This will auto-register your project when pushed to GitHub',
+                true,
+              );
 
           if (installWorkflow) {
             // Get the workflow template
@@ -232,7 +241,9 @@ export function createInitCommand(): Command {
             const workflowPath = path.join(workflowsDir, 'alexandria.yml');
 
             if (fs.existsSync(workflowPath)) {
-              const overwrite = await promptYesNo('   Workflow already exists. Overwrite?', false);
+              const overwrite = nonInteractive
+                ? false
+                : await promptYesNo('   Workflow already exists. Overwrite?', false);
               if (!overwrite) {
                 console.log('   Skipped workflow installation');
               } else {
