@@ -1,6 +1,15 @@
 import { Command } from 'commander';
-import { LibraryRulesEngine, NodeFileSystemAdapter, NodeGlobAdapter } from '@a24z/core-library';
+import {
+  LibraryRulesEngine,
+  NodeFileSystemAdapter,
+  NodeGlobAdapter,
+  ConfigValidator,
+  CONFIG_FILENAME,
+  type LibraryRule,
+} from '@a24z/core-library';
 import chalk from 'chalk';
+import * as fs from 'fs';
+import * as path from 'path';
 
 function getBasicLintConfig() {
   return {
@@ -77,7 +86,7 @@ function getAdvancedLintConfig() {
   };
 }
 
-function getExampleConfigForRule(ruleId: string, rule: any) {
+function getExampleConfigForRule(ruleId: string, rule: LibraryRule) {
   const baseConfig = {
     $schema: 'https://raw.githubusercontent.com/a24z-ai/alexandria-cli/main/schema/alexandriarc.json',
     version: '1.0.0',
@@ -219,6 +228,60 @@ export const lintCommand = new Command('lint')
     }
 
     console.log(chalk.blue('🔍 Linting Alexandria library...\n'));
+
+    // Check and validate .alexandriarc.json if it exists
+    const configPath = path.join(process.cwd(), CONFIG_FILENAME);
+    if (fs.existsSync(configPath)) {
+      try {
+        const configContent = fs.readFileSync(configPath, 'utf8');
+        const config = JSON.parse(configContent);
+
+        // Validate the configuration
+        const validator = new ConfigValidator();
+        const validation = validator.validate(config);
+
+        // Display validation errors if any
+        if (!validation.valid || (validation.warnings && validation.warnings.length > 0)) {
+          console.log(chalk.yellow('⚠️  Configuration Issues Found:\n'));
+
+          // Show validation errors
+          if (validation.errors && validation.errors.length > 0) {
+            console.log(chalk.red('   Configuration Errors:'));
+            validation.errors.forEach((error) => {
+              console.log(chalk.red(`   ✖ ${error.path ? `[${error.path}] ` : ''}${error.message}`));
+              if (error.value !== undefined) {
+                console.log(chalk.dim(`     Current value: ${JSON.stringify(error.value)}`));
+              }
+            });
+            console.log();
+          }
+
+          // Show validation warnings
+          if (validation.warnings && validation.warnings.length > 0) {
+            console.log(chalk.yellow('   Configuration Warnings:'));
+            validation.warnings.forEach((warning) => {
+              console.log(chalk.yellow(`   ⚠ ${warning.path ? `[${warning.path}] ` : ''}${warning.message}`));
+              if (warning.suggestion) {
+                console.log(chalk.dim(`     💡 ${warning.suggestion}`));
+              }
+            });
+            console.log();
+          }
+
+          // Exit early if there are critical errors
+          if (!validation.valid) {
+            console.log(chalk.red('❌ Please fix configuration errors before running lint.\n'));
+            console.log(chalk.dim('Run "alexandria schema" to see the correct configuration format.'));
+            process.exit(1);
+          }
+        }
+      } catch (error) {
+        console.log(chalk.red('❌ Failed to parse .alexandriarc.json:\n'));
+        console.log(chalk.red(`   ${error instanceof Error ? error.message : String(error)}\n`));
+        console.log(chalk.dim('Run "alexandria schema" to see the correct configuration format.'));
+        process.exit(1);
+      }
+    }
 
     const result = await engine.lint(process.cwd(), {
       enabledRules: options.enable,
