@@ -1,0 +1,225 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/a24z-ai/alexandria-cli/main/schema/alexandriarc.json",
+  "title": "Alexandria Configuration",
+  "description": "Configuration schema for Alexandria CLI",
+  "type": "object",
+  "required": ["version"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Schema URL for validation"
+    },
+    "version": {
+      "type": "string",
+      "enum": ["1.0.0"],
+      "description": "Configuration version"
+    },
+    "project": {
+      "type": "object",
+      "description": "Project metadata",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Project name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Project description"
+        },
+        "version": {
+          "type": "string",
+          "description": "Project version"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["library", "application", "service"],
+          "description": "Project type"
+        },
+        "language": {
+          "oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }],
+          "description": "Programming languages used"
+        },
+        "framework": {
+          "oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }],
+          "description": "Frameworks used"
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "description": "Core context configuration",
+      "properties": {
+        "useGitignore": {
+          "type": "boolean",
+          "default": true,
+          "description": "Respect .gitignore patterns"
+        },
+        "maxDepth": {
+          "type": "number",
+          "minimum": 1,
+          "description": "Maximum directory traversal depth"
+        },
+        "followSymlinks": {
+          "type": "boolean",
+          "default": false,
+          "description": "Follow symbolic links"
+        },
+        "patterns": {
+          "type": "object",
+          "description": "File patterns configuration",
+          "properties": {
+            "include": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Include glob patterns"
+            },
+            "exclude": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Exclude glob patterns"
+            },
+            "priority": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "pattern": { "type": "string" },
+                  "priority": { "type": "number" }
+                },
+                "required": ["pattern", "priority"]
+              },
+              "description": "Pattern priorities"
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "description": "Lint rule configurations",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "enum": [
+                  "document-organization",
+                  "filename-convention",
+                  "stale-references",
+                  "require-references",
+                  "orphaned-references"
+                ],
+                "description": "Rule identifier"
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["error", "warning", "info"],
+                "description": "Rule severity"
+              },
+              "enabled": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable/disable rule"
+              },
+              "options": {
+                "type": "object",
+                "description": "Rule-specific options",
+                "properties": {
+                  "rootExceptions": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Files to exclude at root level"
+                  },
+                  "documentFolders": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Documentation directories"
+                  },
+                  "checkNested": {
+                    "type": "boolean",
+                    "description": "Check nested structures"
+                  },
+                  "style": {
+                    "type": "string",
+                    "enum": ["kebab-case", "snake_case", "camelCase", "PascalCase"],
+                    "description": "Filename style convention"
+                  },
+                  "extensions": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "File extensions to check"
+                  },
+                  "exceptions": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Filename exceptions"
+                  },
+                  "documentFoldersOnly": {
+                    "type": "boolean",
+                    "description": "Only check documentation folders"
+                  },
+                  "autoFix": {
+                    "type": "boolean",
+                    "description": "Enable automatic fixing"
+                  },
+                  "maxAgeDays": {
+                    "type": "number",
+                    "minimum": 1,
+                    "description": "Maximum age threshold in days"
+                  },
+                  "excludeFiles": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "File patterns to exclude"
+                  }
+                }
+              },
+              "fix": {
+                "type": "object",
+                "description": "Fix configuration",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["replace", "remove", "add"],
+                    "description": "Fix type"
+                  },
+                  "suggestion": {
+                    "type": "string",
+                    "description": "Fix suggestion"
+                  }
+                }
+              }
+            },
+            "required": ["id", "severity"]
+          }
+        }
+      }
+    },
+    "reporting": {
+      "type": "object",
+      "description": "Reporting configuration",
+      "properties": {
+        "output": {
+          "type": "string",
+          "enum": ["console", "file", "both"],
+          "default": "console",
+          "description": "Output destination"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["text", "json", "html"],
+          "default": "text",
+          "description": "Output format"
+        },
+        "path": {
+          "type": "string",
+          "description": "Output file path"
+        },
+        "verbose": {
+          "type": "boolean",
+          "default": false,
+          "description": "Verbose output"
+        }
+      }
+    }
+  }
+}

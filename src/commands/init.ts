@@ -65,7 +65,7 @@ export function createInitCommand(): Command {
 
         // Create minimal config
         const config = {
-          $schema: 'https://raw.githubusercontent.com/a24z-ai/alexandria/main/schema/alexandriarc.json',
+          $schema: 'https://raw.githubusercontent.com/a24z-ai/alexandria-cli/main/schema/alexandriarc.json',
           version: '1.0.0',
           context: {
             useGitignore: true,

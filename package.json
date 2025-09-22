@@ -93,6 +93,7 @@
   "files": [
     "dist",
     "templates",
+    "schema",
     "README.md",
     "LICENSE"
   ]
